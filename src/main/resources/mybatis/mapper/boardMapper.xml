@@ -3,8 +3,13 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Board">
+	<!-- 글작성 구문 -->
     <insert id="save" parameterType="board">
         insert into board_table(boardWriter, boardPassword, boardTitle, boardContents)
         values(#{boardWriter}, #{boardPassword}, #{boardTitle}, #{boardContents})
     </insert>
+    <!-- list기능 쿼리구문 -->
+    <select id="findAll" resultType="board">
+    	select * from board_table order by id desc
+    </select>
 </mapper> 
