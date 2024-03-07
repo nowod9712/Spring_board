@@ -12,4 +12,9 @@
     <select id="findAll" resultType="board">
     	select * from board_table order by id desc
     </select>
+    <!-- detail 목록 상세목록 구현 -->
+     <select id="findById" resultType="board">
+    	select * from board_table where id = #{id}
+    </select>
+    
 </mapper> 

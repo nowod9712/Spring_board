@@ -22,6 +22,12 @@ public class BoardRepository {
 	public List<BoardDTO> findAll(){
 		return sql.selectList("Board.findAll");
 	}
+
+	public BoardDTO findById(Long id) {
+		return sql.selectOne("Board.findById", id);
+	}
+	
+	
 	
 	
 	
