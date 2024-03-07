@@ -12,7 +12,7 @@
     <select id="findAll" resultType="board">
     	select * from board_table order by id desc
     </select>
-    <!-- detail 목록 상세목록 쿼리구문 -->
+    <!-- detail 목록 상세정보 쿼리구문 -->
      <select id="findById" resultType="board">
     	select * from board_table where id = #{id}
     </select>
@@ -20,6 +20,9 @@
    	<update id="updateHits" parameterType="Long">
    		update board_table set boardHits = boardHits + 1 where id=#{id}
    	</update>
-    
+   	<!-- delete 게시글 삭제 구문 -->
+   	<delete id="delete" parameterType="Long">
+   		delete from board_table where id = #{id}
+   	</delete>
     
 </mapper> 

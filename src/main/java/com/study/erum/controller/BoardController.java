@@ -41,8 +41,11 @@ public class BoardController {
 	@GetMapping("/")
     public String findAll(Model model){
         List<BoardDTO> boardDTOList = boardService.findAll();
+        //findALL()메소드를 호출해 모든 게시글을 가져온뒤 boardDTOList에 저장.
         model.addAttribute("boardList", boardDTOList);
+        //"boardList"라는 이름으로 boardDTOList를 모델에 추가합니다.     
         return "list";
+        //"list"라는 jsp파일로 전달
 	}
 	
 	@GetMapping	
@@ -51,6 +54,12 @@ public class BoardController {
 		BoardDTO boardDTO = boardService.findById(id);
 		model.addAttribute("board",boardDTO);
 		return "detail";
+	}
+	
+	@GetMapping("/delete")	
+	public String delete(@RequestParam("id") Long id) {
+		boardService.delete(id);
+		return "redirect:/board/";
 	}
 	
 	
