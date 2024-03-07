@@ -29,6 +29,9 @@
 		</tr>
 	</c:forEach>
 	</table>	
+	<a href="/">홈으로</a>
+	
+	
 
 </body>
 </html>

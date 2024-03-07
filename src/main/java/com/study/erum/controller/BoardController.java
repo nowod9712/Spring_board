@@ -90,6 +90,9 @@ public class BoardController {
 						@RequestParam(value = "page", required = false, defaultValue = "1")
 						int page) {
 		System.out.println("page = " + page);
+		// 해당 페이지에서 보여줄 글 목록
+		List<BoardDTO> pagingList = boardService.pageList(page);
+		System.out.println("pageList = " + pagingList);
 		return "index";
 	}
 	
