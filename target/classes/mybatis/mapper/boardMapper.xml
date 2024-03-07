@@ -12,9 +12,14 @@
     <select id="findAll" resultType="board">
     	select * from board_table order by id desc
     </select>
-    <!-- detail 목록 상세목록 구현 -->
+    <!-- detail 목록 상세목록 쿼리구문 -->
      <select id="findById" resultType="board">
     	select * from board_table where id = #{id}
     </select>
+    <!-- 조회수 업데이트 기능 구문 -->
+   	<update id="updateHits" parameterType="Long">
+   		update board_table set boardHits = boardHits + 1 where id=#{id}
+   	</update>
+    
     
 </mapper> 
