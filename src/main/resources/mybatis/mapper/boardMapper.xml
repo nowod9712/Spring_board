@@ -24,5 +24,10 @@
    	<delete id="delete" parameterType="Long">
    		delete from board_table where id = #{id}
    	</delete>
+   	<!--  update 게시글 수정 구문 -->
+   	<update id="update" parameterType="board">
+   		update board_table set boardTitle=#{boardTitle}, boardContents=#{boardContents}
+   		where id = #{id}
+   	</update>
     
 </mapper> 

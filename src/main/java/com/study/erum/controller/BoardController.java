@@ -28,6 +28,7 @@ public class BoardController {
         return "save";
     }
 	
+	//게시글 저장
 	@PostMapping("/save")
 	public String save(@ModelAttribute BoardDTO boardDTO) {
 		int saveResult = boardService.save(boardDTO);
@@ -38,6 +39,7 @@ public class BoardController {
 		}
 	}
 	
+	//게시글 목록
 	@GetMapping("/")
     public String findAll(Model model){
         List<BoardDTO> boardDTOList = boardService.findAll();
@@ -48,6 +50,7 @@ public class BoardController {
         //"list"라는 jsp파일로 전달
 	}
 	
+	//해당 게시글 상세정보
 	@GetMapping	
 	public String findById(@RequestParam("id") Long id, Model model) {
 		boardService.updateHits(id);
@@ -56,11 +59,33 @@ public class BoardController {
 		return "detail";
 	}
 	
+	//게시글 삭제
 	@GetMapping("/delete")	
 	public String delete(@RequestParam("id") Long id) {
 		boardService.delete(id);
 		return "redirect:/board/";
 	}
+	
+	//게시글 수정
+	@GetMapping("/update")	
+	public String updateForm(@RequestParam("id") Long id, Model model) {
+		BoardDTO boardDTO = boardService.findById(id);
+		model.addAttribute("board",boardDTO);
+		return "update";
+		// return "redirect:/board?id="+boardDTO.getId():// 조회수 증가
+	}
+	
+	@PostMapping("/update")
+	public String update(@ModelAttribute BoardDTO boardDTO, Model model) {
+		boardService.update(boardDTO);
+		BoardDTO dto = boardService.findById(boardDTO.getId());
+		model.addAttribute("board", dto);
+		return "detail";
+	}
+	
+	
+	
+	
 	
 	
 	
