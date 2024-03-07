@@ -4,7 +4,7 @@
 
 <mapper namespace="Board">
     <insert id="save" parameterType="board">
-        insert into board_table(boardWriter, boardPass, boardTitle, boardContents)
-        values(#{boardWriter}, #{boardPass}, #{boardTitle}, #{boardContents})
+        insert into board_table(boardWriter, boardPassword, boardTitle, boardContents)
+        values(#{boardWriter}, #{boardPassword}, #{boardTitle}, #{boardContents})
     </insert>
 </mapper> 
