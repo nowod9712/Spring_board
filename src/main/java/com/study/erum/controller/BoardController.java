@@ -1,9 +1,5 @@
 package com.study.erum.controller;
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
-
-import javax.print.DocFlavor.STRING;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.study.erum.dto.BoardDTO;
+import com.study.erum.dto.PageDTO;
 import com.study.erum.service.BoardService;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,7 +32,7 @@ public class BoardController {
 	public String save(@ModelAttribute BoardDTO boardDTO) {
 		int saveResult = boardService.save(boardDTO);
 		if(saveResult > 0) {
-			return "redirect:/board/";
+			return "redirect:/board/paging";
 		}else {
 			return "save";
 		}
@@ -52,10 +51,14 @@ public class BoardController {
 	
 	//해당 게시글 상세정보
 	@GetMapping	
-	public String findById(@RequestParam("id") Long id, Model model) {
+	public String findById(@RequestParam("id") Long id,
+			@RequestParam(value = "page", required = false, defaultValue = "1") int page,
+			Model model) {
 		boardService.updateHits(id);
 		BoardDTO boardDTO = boardService.findById(id);
-		model.addAttribute("board",boardDTO);
+		model.addAttribute("board", boardDTO);
+		model.addAttribute("page", page);
+		
 		return "detail";
 	}
 	
@@ -93,7 +96,11 @@ public class BoardController {
 		// 해당 페이지에서 보여줄 글 목록
 		List<BoardDTO> pagingList = boardService.pageList(page);
 		System.out.println("pageList = " + pagingList);
-		return "index";
+		PageDTO pageDTO = boardService.pagingParam(page);
+		model.addAttribute("boardList", pagingList);
+		model.addAttribute("paging", pageDTO);
+		
+		return "paging";
 	}
 	
 	

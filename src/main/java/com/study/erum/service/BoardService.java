@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.study.erum.dto.BoardDTO;
+import com.study.erum.dto.PageDTO;
 import com.study.erum.repository.BoardRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,9 @@ public class BoardService {
 		boardRepository.update(boardDTO);
 	}
 
+	int pageLimit = 3; // 한 페이지당 보여줄 글 갯수
+	int blockLimit = 3; // 하단에 보여줄 페이지 번호 갯수
+	
 	public List<BoardDTO> pageList(int page) {
 		//pageList: 메소드명으로 페이지별로 게시글 목록을 반환.
 		//int page: 페이지 번호를 나타내는 매개변수.
@@ -61,6 +65,31 @@ public class BoardService {
 		
 		return pagingList;
 	}
+
+	public PageDTO pagingParam(int page) {
+
+		// 전체 글 갯수 조회
+		int boardCount = boardRepository.boardCount();
+		// 전체 페이지 갯수 계산(10/3=3.33333 => 4)
+		int maxPage =(int)(Math.ceil((double) boardCount / pageLimit));
+		// 시작 페이지 값 계산(1, 4, 7, 10, ~~~), blockLimit이 10이라면, 한 번에 10개의 페이지 번호를 보여줌
+		int startPage = (((int)(Math.ceil((double) page / blockLimit))) - 1) * blockLimit + 1;
+		// 끝 페이지 값 계산(3, 6, 9, 12, ~~~)
+		int endPage = startPage + blockLimit - 1;
+		if(endPage > maxPage) {
+			 endPage = maxPage;
+			 
+		}
+		PageDTO pageDTO = new PageDTO();
+        pageDTO.setPage(page);
+        pageDTO.setMaxPage(maxPage);
+        pageDTO.setStartPage(startPage);
+        pageDTO.setEndPage(endPage);
+        return pageDTO;
+		
+	}
+	
+	
 	
 	
 }

@@ -45,6 +45,10 @@ public class BoardRepository {
 		
 		return sql.selectList("Board.pagingList", pagingParams);
 	}
+
+	public int boardCount() {
+		return sql.selectOne("Board.boardCount");
+	}
 	
 	
 	
